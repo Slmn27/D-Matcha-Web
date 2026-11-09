@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f6ee">
+<title>Kasir · D’Matcha Moment</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header><div class="bar"><div class="identity">
+<div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20 4c0 9-3.5 14-9 14a5 5 0 0 1-5-5C6 7.5 11 4 20 4Z"/><path d="M4 21c3-5 6-8 12-12"/></svg></div>
+<div><div class="brand">D’Matcha Moment</div><div class="brand-note">Kasir &amp; pencatatan penjualan</div></div></div>
+<div class="local">Data di perangkat ini</div></div></header>
+<nav aria-label="Navigasi utama"><div>
+<button type="button" data-page="kasir" aria-current="page"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="9" width="18" height="11" rx="2"/><path d="M7 9V4h10v5M7 15h3m5 0h2"/></svg>Kasir</button>
+<button type="button" data-page="pengeluaran"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6m-6 4h6"/></svg>Pengeluaran</button>
+<button type="button" data-page="riwayat"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>Riwayat</button>
+<button type="button" data-page="rekap"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16M6 17v-5m6 5V8m6 9V4"/></svg>Rekap</button>
+</div></nav>
+<main>
+<section id="kasir">
+<div class="page-head"><div class="eyebrow">Penjualan</div><h1>Kasir</h1><p class="muted">Pilih minuman dan catat pembayaran pelanggan.</p></div>
+<div class="order-grid">
+<div class="stack">
+<div class="catalog-tools">
+<div class="search" role="search"><input type="search" id="cariMenu" aria-label="Cari minuman" placeholder="Cari minuman, misalnya Taro" autocomplete="off"><button type="button" id="hapusCari" hidden>Hapus</button></div>
+<div class="row" id="seri" aria-label="Kategori menu"></div>
+<div class="muted" id="hasilMenu" role="status"></div>
+</div>
+<div class="stack sale-list" id="menu" aria-label="Daftar minuman"></div>
+</div>
+<form class="panel stack checkout" id="jual">
+<div class="split"><h2>Pesanan</h2><span class="badge" id="gelas">0 gelas</span></div>
+<div id="keranjang" class="cart-lines muted">Pilih minuman dari menu.</div>
+<div class="split total-row"><span>Total pesanan</span><strong class="total" id="total">Rp0</strong></div>
+<div class="two" aria-label="Metode pembayaran">
+<button type="button" data-payment="Cash" aria-pressed="false">Cash</button>
+<button type="button" data-payment="QRIS" aria-pressed="false">QRIS</button>
+</div>
+<details class="date-expander"><summary>Tanggal transaksi</summary><label class="field">Tanggal penjualan<input type="date" id="tanggalJual" required></label></details>
+<button class="primary" id="simpanJual" disabled>Simpan transaksi</button>
+</form>
+</div>
+</section>
+<section id="pengeluaran" hidden>
+<div class="page-head"><div class="eyebrow">Operasional</div><h1>Pengeluaran</h1><p class="muted">Catat uang yang keluar dan sumber dananya.</p></div>
+<form class="panel stack" id="keluar">
+<label class="field">Nominal (Rp)<input type="number" id="nominal" min="1" max="999999999" step="1" required placeholder="5000" inputmode="numeric"></label>
+<label class="field">Keterangan<input id="keterangan" maxlength="120" required placeholder="Uang sampah"></label>
+<label class="field">Sumber dana<select id="sumber" required><option value="">Pilih sumber dana</option><option>Cash</option><option>Non-tunai</option></select></label>
+<label class="field">Tanggal pengeluaran<input type="date" id="tanggalKeluar" required></label>
+<button class="primary" id="simpanKeluar" disabled>Simpan pengeluaran</button>
+</form>
+</section>
+<section id="riwayat" hidden>
+<div class="page-head"><div class="eyebrow">Transaksi</div><h1>Riwayat</h1><p class="muted">Periksa transaksi yang sudah tercatat.</p></div>
+<div class="stack">
+<div class="date-toolbar panel" data-date-tools="tanggalRiwayat">
+<label class="field">Tanggal transaksi<input type="date" id="tanggalRiwayat" required></label>
+<button type="button" class="date-arrow" data-day="-1" aria-label="Hari sebelumnya">‹</button>
+<button type="button" class="date-arrow" data-day="1" aria-label="Hari berikutnya">›</button>
+<button type="button" data-day="today">Hari ini</button>
+</div>
+<div class="stack" id="daftarRiwayat"></div>
+<div class="panel stack"><h2>Cadangan data</h2><p class="muted">Unduh cadangan agar transaksi bisa dipulihkan jika data browser terhapus atau perangkat diganti.</p>
+<div class="row"><button type="button" id="cadangkan" disabled>Unduh cadangan</button><button type="button" id="pulihkan" disabled>Pulihkan cadangan</button><input type="file" accept=".json,application/json" id="fileCadangan" hidden></div></div>
+</div>
+</section>
+<section id="rekap" hidden>
+<div class="page-head"><div class="eyebrow">Laporan</div><h1>Rekap harian</h1><p class="muted">Lihat penjualan, pengeluaran, dan bagikan laporan harian.</p></div>
+<div class="stack">
+<div class="date-toolbar panel" data-date-tools="tanggalRekap">
+<label class="field">Tanggal rekap<input type="date" id="tanggalRekap" required></label>
+<button type="button" class="date-arrow" data-day="-1" aria-label="Hari sebelumnya">‹</button>
+<button type="button" class="date-arrow" data-day="1" aria-label="Hari berikutnya">›</button>
+<button type="button" data-day="today">Hari ini</button>
+</div>
+<div class="report-grid" id="isiRekap"></div>
+<div class="two">
+<button class="primary" id="bagikanPng" type="button" disabled>Bagikan gambar</button>
+<a class="button" id="unduhPng" aria-disabled="true">Unduh PNG</a>
+</div>
+<details class="panel" id="detailPng">
+<summary>Lihat struk rekap</summary>
+<img id="pratinjauPng" alt="Struk rekap harian D’Matcha Moment" hidden>
+</details>
+</div>
+</section>
+</main>
+<div class="status" id="status" role="status" aria-live="polite"></div>
+<script src="./script.js?v=reset-01" defer></script>
+</body>
+</html>
